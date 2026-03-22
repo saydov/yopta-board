@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/img.png" alt="Малявница" width="600"/>
+  <img src="assets/main-empty.png" alt="Малявница" width="600"/>
   <br><br>
   <img src="https://img.shields.io/badge/language-Java_21-gold?style=flat" />
   <img src="https://img.shields.io/badge/framework-Spring_Boot_3.4-gold?style=flat" />
@@ -38,7 +38,7 @@ mvn spring-boot:run
 http://localhost:8080
 ```
 
-<img src="assets/img_1.png" alt="Скриншот интерфейса" width="600"/>
+<img src="assets/main-with-messages.png" alt="Скриншот интерфейса" width="600"/>
 
 # REST API
 
