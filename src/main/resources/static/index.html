@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Малявница</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #1a1a2e;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #ff6b35;
+            text-shadow: 0 0 20px #ff6b3566;
+            margin-bottom: 8px;
+            letter-spacing: 4px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 30px;
+        }
+
+        .form-wrap {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            background: #16213e;
+            border: 1px solid #ff6b3544;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            background: #0f3460;
+            color: #e0e0e0;
+            border: 1px solid #ff6b3566;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            resize: vertical;
+            min-height: 80px;
+            outline: none;
+            display: block;
+        }
+
+        textarea::placeholder {
+            color: #555;
+        }
+
+        textarea:focus {
+            border-color: #ff6b35;
+        }
+
+        .btn-send {
+            margin-top: 10px;
+            width: 100%;
+            padding: 12px;
+            background: #ff6b35;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-send:hover {
+            background: #e05a28;
+        }
+
+        #wall {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .card {
+            background: #16213e;
+            border: 1px solid #0f3460;
+            border-left: 3px solid #ff6b35;
+            border-radius: 6px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .card-time {
+            color: #666;
+            font-size: 0.75rem;
+        }
+
+        .btn-del {
+            align-self: flex-end;
+            padding: 4px 12px;
+            background: transparent;
+            color: #ff4444;
+            border: 1px solid #ff444466;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-del:hover {
+            background: #ff444422;
+            border-color: #ff4444;
+        }
+
+        .empty {
+            text-align: center;
+            color: #555;
+            padding: 40px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-wrap">
+    <form id="form">
+        <textarea id="input" placeholder="Кинь малявку на районе..."></textarea>
+        <button type="submit" class="btn-send">КИНУТЬ НАХ</button>
+    </form>
+</div>
+
+<div id="wall"></div>
+
+<script src="yopta.js" defer></script>
+<script language="YoptaScript">
+
+    ебало.xhr сука йопта(method, url, body, status, cb) жЫ
+        гыы req сука гыйбать запросПоЩам() нах
+        req.отрыть(method, url) нах
+        вилкойвглаз (body) жЫ
+            req.setRequestHeader('Content-Type', 'application/json') нах
+        есть
+        req.опаГотовЙоптЧозанахуй сука йопта() жЫ
+            вилкойвглаз (req.готовностьЙопт эквалио 4 ичо req.status эквалио status) жЫ
+                cb(req) нах
+            есть
+        есть нах
+        req.всёПиздуй(body) нах
+    есть нах
+
+    ебало.намутитьКарточку сука йопта(msg) жЫ
+        гыы el сука ксива.намутитьЛошка('div') нах
+        el.className сука 'card' нах
+        гыы ts сука гыйбать Date(msg.createdAt).toLocaleString('ru') нах
+        el.innerHTML сука '<p class="card-text">' + msg.text + '</p><span class="card-time">' + ts + '</span><button class="btn-del" onclick="window.убрать(\'' + msg.id + '\')">убрать</button>' нах
+        отвечаю el нах
+    есть нах
+
+    ебало.загрузить сука йопта() жЫ
+        ебало.xhr('GET', '/api/messages', нуллио, 200, йопта(req) жЫ
+            гыы msgs сука JSON.parse(req.responseText) нах
+            гыы wall сука ксива.вычислитьЛохаПоНомеру('wall') нах
+            wall.innerHTML сука '' нах
+            вилкойвглаз (msgs.писькомер эквалио 0) жЫ
+                wall.innerHTML сука '<p class="empty">// тут пока тихо на районе //</p>' нах
+                отвечаю нах
+            есть
+            msgs.пероПодРебро(йопта(msg) жЫ
+                wall.заделатьПездюка(ебало.намутитьКарточку(msg)) нах
+            есть) нах
+        есть) нах
+    есть нах
+
+    ебало.убрать сука йопта(id) жЫ
+        ебало.xhr('DELETE', '/api/messages/' + id, нуллио, 204, йопта() жЫ
+            ебало.загрузить() нах
+        есть) нах
+    есть нах
+
+    ксива.вычислитьЛохаПоНомеру('form').опаХуйВГовне сука йопта(e) жЫ
+        e.preventDefault() нах
+        гыы txt сука ксива.вычислитьЛохаПоНомеру('input').валио нах
+        вилкойвглаз (чобля txt.trim()) жЫ
+            ебало.шухер('Кинь малявку сначала!') нах
+            отвечаю нах
+        есть
+        ебало.xhr('POST', '/api/messages', JSON.stringify(жЫ text: txt есть), 201, йопта() жЫ
+            ксива.вычислитьЛохаПоНомеру('input').валио сука '' нах
+            ебало.загрузить() нах
+        есть) нах
+    есть нах
+
+    ебало.загрузить() нах
+
+</script>
+
+</body>
+</html>
